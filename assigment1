@@ -1,0 +1,129 @@
+1.1
+
+using System;
+
+class Calculator
+{
+    static void Main()
+    {
+        // 提示用户输入第一个数字
+        Console.Write("请输入第一个数字: ");
+        double num1 = Convert.ToDouble(Console.ReadLine());
+
+        // 提示用户输入运算符
+        Console.Write("请输入运算符 (+, -, *, /): ");
+        string operation = Console.ReadLine();
+
+        // 提示用户输入第二个数字
+        Console.Write("请输入第二个数字: ");
+        double num2 = Convert.ToDouble(Console.ReadLine());
+
+        // 计算结果
+        double result = 0;
+        bool validOperation = true;
+
+        switch (operation)
+        {
+            case "+":
+                result = num1 + num2;
+                break;
+            case "-":
+                result = num1 - num2;
+                break;
+            case "*":
+                result = num1 * num2;
+                break;
+            case "/":
+                if (num2 != 0)
+                {
+                    result = num1 / num2;
+                }
+                else
+                {
+                    validOperation = false;
+                    Console.WriteLine("错误：除数不能为零!");
+                }
+                break;
+            default:
+                validOperation = false;
+                Console.WriteLine("错误：无效的运算符!");
+                break;
+        }
+
+        // 如果运算有效，则输出结果
+        if (validOperation)
+        {
+            Console.WriteLine($"结果: {num1} {operation} {num2} = {result}");
+        }
+    }
+
+} 
+1.2
+
+using System;
+using System.Windows.Forms;
+
+namespace CalculatorWinForms
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // 设置运算符选择框
+            comboBox1.Items.Add("+");
+            comboBox1.Items.Add("-");
+            comboBox1.Items.Add("*");
+            comboBox1.Items.Add("/");
+            comboBox1.SelectedIndex = 0; // 默认选择加法
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // 获取输入的数字和运算符
+            double num1, num2, result = 0;
+            bool isValid = double.TryParse(textBox1.Text, out num1) && double.TryParse(textBox2.Text, out num2);
+
+            if (!isValid)
+            {
+                MessageBox.Show("请输入有效的数字!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string operation = comboBox1.SelectedItem.ToString();
+
+            // 执行计算
+            switch (operation)
+            {
+                case "+":
+                    result = num1 + num2;
+                    break;
+                case "-":
+                    result = num1 - num2;
+                    break;
+                case "*":
+                    result = num1 * num2;
+                    break;
+                case "/":
+                    if (num2 != 0)
+                    {
+                        result = num1 / num2;
+                    }
+                    else
+                    {
+                        MessageBox.Show("错误：除数不能为零!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    break;
+            }
+
+            // 显示结果
+            label1.Text = $"结果: {result}";
+        }
+    }
+}
+

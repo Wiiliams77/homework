@@ -1,35 +1,24 @@
 ﻿using System;
+using System.Linq;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("请输入一个整数: ");
-        if (int.TryParse(Console.ReadLine(), out int number) && number > 1)
-        {
-            Console.Write("素数因子: ");
-            FindPrimeFactors(number);
-        }
-        else
-        {
-            Console.WriteLine("请输入一个大于 1 的整数。");
-        }
-    }
+        Console.WriteLine("请输入整数数组的元素（用空格分隔）：");
+        int[] numbers = Console.ReadLine()
+                        .Split(' ')
+                        .Select(int.Parse)
+                        .ToArray();
 
-    static void FindPrimeFactors(int n)
-    {
-        for (int i = 2; i * i <= n; i++)
-        {
-            while (n % i == 0)
-            {
-                Console.Write(i + " ");
-                n /= i;
-            }
-        }
-        if (n > 1) // 如果剩余的 n 仍是一个素数
-        {
-            Console.Write(n);
-        }
-        Console.WriteLine();
+        int max = numbers.Max();
+        int min = numbers.Min();
+        int sum = numbers.Sum();
+        double avg = numbers.Average();
+
+        Console.WriteLine($"最大值: {max}");
+        Console.WriteLine($"最小值: {min}");
+        Console.WriteLine($"总和: {sum}");
+        Console.WriteLine($"平均值: {avg:F2}");
     }
 }
